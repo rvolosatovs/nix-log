@@ -32,7 +32,10 @@ with self.lib; let
 
   mkAttrTest = f: msg: {
     expected = "test";
-    expr = f msg {foo = "foo";} "test";
+    expr = f msg {
+      foo = "foo";
+      foobar.foo = "foo";
+    } "test";
   };
 in {
   lib = nix-flake-tests.lib.check {
