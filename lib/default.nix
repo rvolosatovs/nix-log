@@ -9,7 +9,17 @@ with builtins; let
 
   logLevel.default = logLevel.WARN;
 
-  formatAttrs.default = formatAttrs.toJSON;
+  formatAttrsPretty' = prefix: attrs: let
+    pairs = mapAttrsToList (k: v:
+      if isAttrs v
+      then formatAttrsPretty' "${prefix}${k}." v
+      else "\n${prefix}${k}=${toJSON v}")
+    attrs;
+  in
+    concatStrings pairs;
+
+  formatAttrs.default = formatAttrs.pretty;
+  formatAttrs.pretty = formatAttrsPretty' "";
   formatAttrs.toJSON = toJSON;
   formatAttrs.toString = toString;
 
