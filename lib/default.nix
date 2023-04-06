@@ -52,30 +52,26 @@ with builtins; let
       isTrace = level == logLevel.TRACE;
 
       log.trace = msg:
-        with logLevel;
-          if isTrace
-          then trace msg
-          else x: x;
+        if isTrace
+        then trace msg
+        else x: x;
 
       log.debug = msg:
-        with logLevel;
-          if isDebug || isTrace
-          then debug msg
-          else x: x;
+        if isDebug || isTrace
+        then debug msg
+        else x: x;
 
       log.info = msg:
-        with logLevel;
-          if isInfo || isDebug || isTrace
-          # info already adds a prefix
-          then info msg
-          else x: x;
+        if isInfo || isDebug || isTrace
+        # info already adds a prefix
+        then info msg
+        else x: x;
 
       log.warn = msg:
-        with logLevel;
-          if isWarn || isInfo || isDebug || isTrace
-          # warn already adds a prefix and has additional functionality built-in
-          then warn msg
-          else x: x;
+        if isWarn || isInfo || isDebug || isTrace
+        # warn already adds a prefix and has additional functionality built-in
+        then warn msg
+        else x: x;
 
       mkAttrLog = log: msg: attrs:
         log "${msg} ${(formatAttrs attrs)}";
@@ -93,10 +89,10 @@ with builtins; let
         then warn msg
         else x: x;
 
-      trace' = mkAttrLog trace;
-      debug' = mkAttrLog debug;
-      info' = mkAttrLog info;
-      warn' = mkAttrLog warn;
+      trace' = mkAttrLog log.trace;
+      debug' = mkAttrLog log.debug;
+      info' = mkAttrLog log.info;
+      warn' = mkAttrLog log.warn;
     };
 in {
   inherit
