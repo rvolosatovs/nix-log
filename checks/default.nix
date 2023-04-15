@@ -35,6 +35,7 @@ with self.lib; let
     expr = f msg {
       foo = "foo";
       foobar.foo = "foo";
+      func = {}: "foo";
       drv = derivation {
         inherit (pkgs.buildPlatform) system;
 
