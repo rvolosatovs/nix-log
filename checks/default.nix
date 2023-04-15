@@ -35,7 +35,12 @@ with self.lib; let
     expr = f msg {
       foo = "foo";
       foobar.foo = "foo";
+
       func = {}: "foo";
+      opt = mkOption {
+        type = types.enum ["foo" "bar"];
+        default = "foo";
+      };
       drv = derivation {
         inherit (pkgs.buildPlatform) system;
 

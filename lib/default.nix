@@ -14,11 +14,16 @@ with builtins; let
       if isFunction v
       then "'<function>'"
       else toJSON v;
-    pairs = mapAttrsToList (k: v:
-      if isDerivation v || !isAttrs v
-      then "\n${prefix}${k}=${toPretty v}"
-      else formatAttrsPretty' "${prefix}${k}." v)
-    attrs;
+    pairs =
+      mapAttrsToList (
+        k: v:
+          if isOptionType v
+          then formatAttrsPretty' "${prefix}${k}." (filterAttrs (k: _: k != "functor") v)
+          else if isDerivation v || !isAttrs v
+          then "\n${prefix}${k}=${toPretty v}"
+          else formatAttrsPretty' "${prefix}${k}." v
+      )
+      attrs;
   in
     concatStrings pairs;
 
