@@ -10,9 +10,13 @@ with builtins; let
   logLevel.default = logLevel.WARN;
 
   formatAttrsPretty' = prefix: attrs: let
+    toPretty = v:
+      if isFunction v
+      then "'<function>'"
+      else toJSON v;
     pairs = mapAttrsToList (k: v:
       if isDerivation v || !isAttrs v
-      then "\n${prefix}${k}=${toJSON v}"
+      then "\n${prefix}${k}=${toPretty v}"
       else formatAttrsPretty' "${prefix}${k}." v)
     attrs;
   in
