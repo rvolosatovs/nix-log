@@ -35,6 +35,14 @@ with self.lib; let
     expr = f msg {
       foo = "foo";
       foobar.foo = "foo";
+      drv = derivation {
+        inherit (pkgs.buildPlatform) system;
+
+        name = "foo";
+        builder = pkgs.writeShellScriptBin "foo" ''
+          echo foo
+        '';
+      };
     } "test";
   };
 in {

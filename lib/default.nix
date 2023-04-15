@@ -11,9 +11,9 @@ with builtins; let
 
   formatAttrsPretty' = prefix: attrs: let
     pairs = mapAttrsToList (k: v:
-      if isAttrs v
-      then formatAttrsPretty' "${prefix}${k}." v
-      else "\n${prefix}${k}=${toJSON v}")
+      if isDerivation v || !isAttrs v
+      then "\n${prefix}${k}=${toJSON v}"
+      else formatAttrsPretty' "${prefix}${k}." v)
     attrs;
   in
     concatStrings pairs;
