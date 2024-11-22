@@ -16,7 +16,7 @@ jobs:
             accept-flake-config = true
       - uses: jessestricker/nix-flake-update@v1
         id: nix-update
-      - uses: peter-evans/create-pull-request@v5
+      - uses: peter-evans/create-pull-request@v7
         with:
           branch: nix-update
           commit-message: "build(nix): update flake lock"
