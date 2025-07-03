@@ -19,7 +19,7 @@ jobs:
     runs-on: ${{ matrix.host }}
     steps:
     - uses: actions/checkout@v3
-    - uses: DeterminateSystems/nix-installer-action@v16
+    - uses: DeterminateSystems/nix-installer-action@v18
       with:
         extra-conf: |
           accept-flake-config = true
