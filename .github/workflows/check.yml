@@ -18,7 +18,7 @@ jobs:
         - ubuntu-latest
     runs-on: ${{ matrix.host }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v5
     - uses: DeterminateSystems/nix-installer-action@v16
       with:
         extra-conf: |
